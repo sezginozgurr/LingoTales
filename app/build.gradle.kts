@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -56,4 +59,40 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.androidx.security.crypto)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    //Navigation
+    implementation(libs.navigation.compose)
+
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.datastore.preferences)
+
+    // Timber
+    implementation(libs.timber)
+
+    // chucker
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.no.op)
+
+    implementation ("com.google.accompanist:accompanist-permissions:0.34.0")
+    implementation ("androidx.compose.ui:ui:1.6.0")
+
+    implementation("androidx.compose.foundation:foundation:1.6.1")
+    implementation(platform("androidx.compose:compose-bom:2025.02.00"))
+    implementation("androidx.activity:activity-compose:1.8.0")
 }
