@@ -74,7 +74,7 @@ fun NavigationGraph(
 
         composable<Destination.Choose> {
             ChooseScreen(
-                onNavigateToHome = {
+                onCategorySelected = {
                     navController.navigate(Destination.Home)
                 }
             )

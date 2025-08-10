@@ -95,4 +95,5 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.6.1")
     implementation(platform("androidx.compose:compose-bom:2025.02.00"))
     implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13")
 }

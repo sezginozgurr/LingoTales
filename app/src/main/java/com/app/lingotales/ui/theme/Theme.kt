@@ -69,6 +69,10 @@ val pingUDMSansFamily = FontFamily(
     Font(R.font.lingo_bold, FontWeight.Bold),
 )
 
+val LingoUdmRubikFamily = FontFamily(
+    Font(R.font.rubik, FontWeight.Medium)
+)
+
 val regularBlack9 = TextStyle(
     color = black,
     fontSize = 9.sp,
@@ -127,6 +131,12 @@ val regularWhite24 = TextStyle(
     color = white,
     fontSize = 24.sp,
     fontFamily = pingUDMSansFamily,
+    fontWeight = FontWeight.Normal,
+)
+val regularRubikBlack24 = TextStyle(
+    color = white,
+    fontSize = 36.sp,
+    fontFamily = LingoUdmRubikFamily,
     fontWeight = FontWeight.Normal,
 )
 val regularBlack24 = TextStyle(
