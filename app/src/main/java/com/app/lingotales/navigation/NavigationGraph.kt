@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.app.lingotales.presentation.choose.ChooseScreen
 import com.app.lingotales.presentation.home.HomeScreen
 import com.app.lingotales.presentation.login.LoginScreen
@@ -74,17 +75,17 @@ fun NavigationGraph(
 
         composable<Destination.Choose> {
             ChooseScreen(
-                onCategorySelected = {
-                    navController.navigate(Destination.Home)
-                }
+                onCategorySelected = { type ->
+                    navController.navigate(Destination.Home(type))
+                },
             )
         }
 
-        composable<Destination.Home> {
+        composable<Destination.Home> { backStackEntry ->
+            val args = backStackEntry.toRoute<Destination.Home>()
             HomeScreen(
-                onBackPressed = {
-                    navController.popBackStack()
-                }
+                type = args.type,
+                onBackPressed = { navController.popBackStack() }
             )
         }
     }

@@ -22,10 +22,18 @@ class ChooseViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(
         ChooseUiState(
             categories = listOf(
-                CategoryUiModel("masal", "Masallar", R.drawable.masallar),
-                CategoryUiModel("hikaye", "Hikayeler", R.drawable.egitici),
-                CategoryUiModel("egitici", "Eğitici Hikayeler", R.drawable.egitici),
-                CategoryUiModel("hayvan", "Hayvan Hikayeleri", R.drawable.hayvan_hikayesi),
+                CategoryUiModel("masal", "Masallar", R.drawable.masallar, CategoryType.MASAL),
+                CategoryUiModel("hikaye", "Hikayeler", R.drawable.egitici, CategoryType.HIKAYELER),
+                CategoryUiModel(
+                    "egitici",
+                    "Eğitici Hikayeler",
+                    R.drawable.egitici,
+                    CategoryType.EGITICI
+                ),
+                CategoryUiModel(
+                    "hayvan", "Hayvan Hikayeleri", R.drawable.hayvan_hikayesi,
+                    CategoryType.HAYVAN_HIKAYELERI
+                ),
             )
         )
     )

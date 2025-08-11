@@ -1,5 +1,6 @@
 package com.app.lingotales.navigation
 
+import com.app.lingotales.presentation.choose.CategoryType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,7 +16,7 @@ sealed class Destination {
     data object Login : Destination()
 
     @Serializable
-    data object Home : Destination()
+    data class Home(val type: CategoryType) : Destination()
 
     @Serializable
     data object Choose : Destination()

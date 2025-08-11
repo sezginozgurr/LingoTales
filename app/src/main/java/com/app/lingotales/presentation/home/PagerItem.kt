@@ -1,7 +1,9 @@
 package com.app.lingotales.presentation.home
 
+import androidx.annotation.DrawableRes
+
 data class PagerItem(
     val title: String,
     val subtitle: String,
-    val imageRes: Int
+    @DrawableRes val imageRes: Int
 )

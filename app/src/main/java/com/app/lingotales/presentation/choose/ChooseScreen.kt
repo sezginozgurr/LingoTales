@@ -41,7 +41,7 @@ import com.app.lingotales.util.extension.animatedItemsIndexed
 @Composable
 fun ChooseScreen(
     viewModel: ChooseViewModel = hiltViewModel(),
-    onCategorySelected: () -> Unit
+    onCategorySelected: (CategoryType) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -97,7 +97,7 @@ fun ChooseScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
                         viewModel.onEvent(ChooseUiEvent.SelectCategory(cat.id))
-                        onCategorySelected()
+                        onCategorySelected(cat.type)
                     }
                 )
             }
@@ -160,8 +160,8 @@ fun ChooseScreenPreview() {
 fun ChooseScreenPreview2() {
     val previewUiState = ChooseUiState(
         categories = listOf(
-            CategoryUiModel("1", "Spor", R.drawable.choose_top),
-            CategoryUiModel("2", "Teknoloji", R.drawable.choose_top)
+            CategoryUiModel("1", "Spor", R.drawable.choose_top, CategoryType.EGITICI),
+            CategoryUiModel("2", "Teknoloji", R.drawable.choose_top,CategoryType.EGITICI)
         )
     )
 
