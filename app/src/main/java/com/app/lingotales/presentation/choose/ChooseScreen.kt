@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -48,7 +49,14 @@ fun ChooseScreen(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Blue)
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFFF59671),
+                        Color(0xFFDC4044)
+                    )
+                )
+            )
     ) {
         val (header, grid) = createRefs()
 
@@ -161,7 +169,7 @@ fun ChooseScreenPreview2() {
     val previewUiState = ChooseUiState(
         categories = listOf(
             CategoryUiModel("1", "Spor", R.drawable.choose_top, CategoryType.EGITICI),
-            CategoryUiModel("2", "Teknoloji", R.drawable.choose_top,CategoryType.EGITICI)
+            CategoryUiModel("2", "Teknoloji", R.drawable.choose_top, CategoryType.EGITICI)
         )
     )
 
@@ -171,7 +179,7 @@ fun ChooseScreenPreview2() {
                 .fillMaxSize()
                 .background(Color.Blue)
         ) {
-            ChooseScreen{}
+            ChooseScreen {}
         }
     }
 }

@@ -31,7 +31,7 @@ class ChooseViewModel : ViewModel() {
                     CategoryType.EGITICI
                 ),
                 CategoryUiModel(
-                    "hayvan", "Hayvan Hikayeleri", R.drawable.hayvan_hikayesi,
+                    "hayvan", "Hayvan Hikayeleri", R.drawable.hayvan_hikayeleri,
                     CategoryType.HAYVAN_HIKAYELERI
                 ),
             )
