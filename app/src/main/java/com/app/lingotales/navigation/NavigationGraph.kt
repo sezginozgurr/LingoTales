@@ -18,7 +18,7 @@ import com.app.lingotales.presentation.home.detail.HomeDetailUiModel
 import com.app.lingotales.presentation.login.LoginScreen
 import com.app.lingotales.ui.theme.black
 import com.app.lingotales.util.extension.navTypeOf
-import com.app.tinytales.presentation.onboarding.OnboardingRoute
+import com.app.lingotales.presentation.onboarding.OnboardingRoute
 import kotlin.reflect.typeOf
 
 @Composable

@@ -1,7 +1,9 @@
-package com.app.tinytales.presentation.onboarding
+package com.app.lingotales.presentation.onboarding
+
+import androidx.annotation.RawRes
 
 data class OnboardingPage(
-    val imageRes: Int,
+    @RawRes val lottieRes: Int,
     val title: String,
     val description: String
 )

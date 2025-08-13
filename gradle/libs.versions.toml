@@ -25,6 +25,7 @@ kotlin-serialization-json = "1.8.0"
 kotlin-serialization-plugin = "2.0.21"
 securityCrypto = "1.1.0-alpha04"
 timber = "5.0.1"
+foundation = "1.8.3"
 
 
 [libraries]
@@ -64,6 +65,7 @@ logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", ver
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

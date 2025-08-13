@@ -32,6 +32,8 @@ import com.app.lingotales.navigation.Destination
 import com.app.lingotales.presentation.choose.CategoryType
 import com.app.lingotales.presentation.home.detail.HomeDetailUiModel
 import com.app.lingotales.ui.theme.LingoTalesTheme
+import com.app.lingotales.ui.theme.regularBlack16Alpha50
+import com.app.lingotales.ui.theme.regularBlack24
 import com.app.lingotales.util.MockBooks
 import com.app.lingotales.util.extension.noRippleClickable
 import kotlin.math.absoluteValue
@@ -103,7 +105,7 @@ fun HomeScreen(
                             ) {
                                 Text(
                                     text = books[page].title,
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = regularBlack24,
                                     modifier = Modifier.padding(bottom = 8.dp),
                                     maxLines = 1
                                 )
@@ -123,7 +125,7 @@ fun HomeScreen(
                                 }
                                 Text(
                                     text = books[page].subtitle,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = regularBlack16Alpha50,
                                     modifier = Modifier.padding(top = 8.dp),
                                     maxLines = 1
                                 )

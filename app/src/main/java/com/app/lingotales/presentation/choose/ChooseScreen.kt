@@ -37,6 +37,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.lingotales.R
 import com.app.lingotales.ui.theme.regularRubikBlack24
+import com.app.lingotales.ui.theme.regularWhite24
 import com.app.lingotales.util.extension.animatedItemsIndexed
 
 @Composable
@@ -148,11 +149,10 @@ private fun CategoryCard(
         Spacer(Modifier.height(8.dp))
         Text(
             text = title,
-            style = MaterialTheme.typography.bodyLarge,
+            style = regularWhite24 ,
             color = Color.White,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            fontSize = 16.sp
         )
     }
 }
@@ -161,27 +161,6 @@ private fun CategoryCard(
 @Composable
 fun ChooseScreenPreview() {
     ChooseScreen { }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ChooseScreenPreview2() {
-    val previewUiState = ChooseUiState(
-        categories = listOf(
-            CategoryUiModel("1", "Spor", R.drawable.choose_top, CategoryType.EGITICI),
-            CategoryUiModel("2", "Teknoloji", R.drawable.choose_top, CategoryType.EGITICI)
-        )
-    )
-
-    MaterialTheme {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Blue)
-        ) {
-            ChooseScreen {}
-        }
-    }
 }
 
 

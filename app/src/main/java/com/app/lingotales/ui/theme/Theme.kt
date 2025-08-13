@@ -63,10 +63,10 @@ fun LingoTalesTheme(
 }
 
 val pingUDMSansFamily = FontFamily(
-    Font(R.font.lingo_regular, FontWeight.Normal),
-    Font(R.font.lingo_medium, FontWeight.Medium),
-    Font(R.font.lingo_semibold, FontWeight.SemiBold),
-    Font(R.font.lingo_bold, FontWeight.Bold),
+    Font(R.font.luckies, FontWeight.Normal),
+    Font(R.font.luckies, FontWeight.Medium),
+    Font(R.font.luckies, FontWeight.SemiBold),
+    Font(R.font.luckies, FontWeight.Bold),
 )
 
 val LingoUdmRubikFamily = FontFamily(

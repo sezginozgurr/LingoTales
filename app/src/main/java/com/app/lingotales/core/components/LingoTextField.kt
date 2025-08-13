@@ -40,7 +40,7 @@ import com.app.lingotales.ui.theme.regularBlack9Alpha50
 import com.app.lingotales.ui.theme.white
 
 @Composable
-fun TinyTextField(
+fun LingoTextField(
     value: String,
     title: String,
     onValueChange: (String) -> Unit,
@@ -222,7 +222,7 @@ fun GetDecorationBox(
 @Preview
 @Composable
 private fun Preview() {
-    TinyTextField(
+    LingoTextField(
         modifier = Modifier
             .padding(8.dp)
             .height(48.dp),
