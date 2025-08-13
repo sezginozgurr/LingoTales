@@ -17,7 +17,9 @@ import com.app.lingotales.presentation.home.detail.HomeDetailScreen
 import com.app.lingotales.presentation.home.detail.HomeDetailUiModel
 import com.app.lingotales.presentation.login.LoginScreen
 import com.app.lingotales.ui.theme.black
+import com.app.lingotales.util.extension.navTypeOf
 import com.app.tinytales.presentation.onboarding.OnboardingRoute
+import kotlin.reflect.typeOf
 
 @Composable
 fun NavigationGraph(
@@ -83,14 +85,18 @@ fun NavigationGraph(
             HomeScreen(
                 type = args.type,
                 onBackPressed = { navController.popBackStack() },
-                navigateDetail = {
-                    navController.navigate(it)
+                navigateDetail = { model ->
+                    navController.navigate(Destination.HomeDetail(model))
                 }
             )
         }
 
-        composable<Destination.HomeDetail> {
+        composable<Destination.HomeDetail>(
+            typeMap = mapOf(typeOf<HomeDetailUiModel>() to navTypeOf<HomeDetailUiModel>())
+        ) { backStackEntry ->
+            val model: Destination.HomeDetail = backStackEntry.toRoute()
             HomeDetailScreen(
+                uiModel = model.model,
                 onBackPressed = { navController.popBackStack() }
             )
         }

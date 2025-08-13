@@ -20,7 +20,7 @@ sealed class Destination {
     data class Home(val type: CategoryType) : Destination()
 
     @Serializable
-    data object HomeDetail : Destination()
+    data class HomeDetail(val model: HomeDetailUiModel) : Destination()
 
     @Serializable
     data object Choose : Destination()

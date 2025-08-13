@@ -30,6 +30,7 @@ import androidx.compose.ui.zIndex
 import com.app.lingotales.core.components.LingoScaffold
 import com.app.lingotales.navigation.Destination
 import com.app.lingotales.presentation.choose.CategoryType
+import com.app.lingotales.presentation.home.detail.HomeDetailUiModel
 import com.app.lingotales.ui.theme.LingoTalesTheme
 import com.app.lingotales.util.MockBooks
 import com.app.lingotales.util.extension.noRippleClickable
@@ -48,7 +49,7 @@ fun HomeScreenRoute(
 fun HomeScreen(
     type: CategoryType,
     onBackPressed: () -> Unit,
-    navigateDetail: (Destination.HomeDetail) -> Unit
+    navigateDetail: (HomeDetailUiModel) -> Unit
 ) {
     val books = remember(type) { MockBooks.forType(type) }
     val pagerState = rememberPagerState(pageCount = { books.size })
@@ -77,10 +78,8 @@ fun HomeScreen(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .noRippleClickable {
-                                    navigateDetail(Destination.HomeDetail)
-                                    /* Destination.HomeDetail(
-                                        HomeDetailUiModel(books[pagerState.currentPage].title)
-                                    ) */
+                                    navigateDetail(HomeDetailUiModel(books[pagerState.currentPage].title))
+
                                 },
                             verticalAlignment = Alignment.CenterVertically,
                             contentPadding = PaddingValues(horizontal = 64.dp),
