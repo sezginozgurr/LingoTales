@@ -27,7 +27,7 @@ object MockBooks {
     )
 
     private val masal = listOf(
-        PagerItem("Kırmızı Başlıklı Kız", "Grimm Kardeşler", R.drawable.book_cover_1),
+        PagerItem("Toprak ve Uçan Tohum", "Toprak ve Uçan Tohum", R.drawable.kapak_toprak_ve_ucan_thoum),
         PagerItem("Rapunzel", "Grimm Kardeşler", R.drawable.book_cover_2),
         PagerItem("Pamuk Prenses", "Grimm Kardeşler", R.drawable.book_cover_5)
     )
