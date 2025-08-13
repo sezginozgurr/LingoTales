@@ -28,9 +28,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.app.lingotales.core.components.LingoScaffold
+import com.app.lingotales.navigation.Destination
 import com.app.lingotales.presentation.choose.CategoryType
 import com.app.lingotales.ui.theme.LingoTalesTheme
 import com.app.lingotales.util.MockBooks
+import com.app.lingotales.util.extension.noRippleClickable
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -43,7 +45,11 @@ fun HomeScreenRoute(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(type: CategoryType, onBackPressed: () -> Unit) {
+fun HomeScreen(
+    type: CategoryType,
+    onBackPressed: () -> Unit,
+    navigateDetail: (Destination.HomeDetail) -> Unit
+) {
     val books = remember(type) { MockBooks.forType(type) }
     val pagerState = rememberPagerState(pageCount = { books.size })
 
@@ -56,7 +62,6 @@ fun HomeScreen(type: CategoryType, onBackPressed: () -> Unit) {
             Box(modifier = Modifier.fillMaxSize()) {
 
                 if (books.isEmpty()) {
-                    // Basit boş durum
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -69,7 +74,14 @@ fun HomeScreen(type: CategoryType, onBackPressed: () -> Unit) {
                     Column(modifier = Modifier.zIndex(1f)) {
                         HorizontalPager(
                             state = pagerState,
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .noRippleClickable {
+                                    navigateDetail(Destination.HomeDetail)
+                                    /* Destination.HomeDetail(
+                                        HomeDetailUiModel(books[pagerState.currentPage].title)
+                                    ) */
+                                },
                             verticalAlignment = Alignment.CenterVertically,
                             contentPadding = PaddingValues(horizontal = 64.dp),
                             pageSpacing = 16.dp
@@ -129,5 +141,5 @@ fun HomeScreen(type: CategoryType, onBackPressed: () -> Unit) {
 @Preview(showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(type = CategoryType.HIKAYELER) {}
+    HomeScreen(type = CategoryType.HIKAYELER, {}) {}
 }

@@ -13,15 +13,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.app.lingotales.presentation.choose.ChooseScreen
 import com.app.lingotales.presentation.home.HomeScreen
+import com.app.lingotales.presentation.home.detail.HomeDetailScreen
+import com.app.lingotales.presentation.home.detail.HomeDetailUiModel
 import com.app.lingotales.presentation.login.LoginScreen
 import com.app.lingotales.ui.theme.black
 import com.app.tinytales.presentation.onboarding.OnboardingRoute
 
 @Composable
 fun NavigationGraph(
-    navController: NavHostController,
-    startDestination: Destination,
-    modifier: Modifier
+    navController: NavHostController, startDestination: Destination, modifier: Modifier
 ) {
 
     NavHost(
@@ -47,8 +47,7 @@ fun NavigationGraph(
             slideOutOfContainer(
                 AnimatedContentTransitionScope.SlideDirection.End, tween(500)
             )
-        }
-    ) {
+        }) {
         composable<Destination.Empty> {
             Box(
                 modifier = Modifier
@@ -61,23 +60,21 @@ fun NavigationGraph(
             OnboardingRoute(
                 navigateToLoginScreen = {
                     navController.navigate(Destination.Login)
-                }
-            )
+                })
         }
 
         composable<Destination.Login> {
             LoginScreen(
                 onLoginSuccess = {
                     navController.navigate(Destination.Choose)
-                }
-            )
+                })
         }
 
         composable<Destination.Choose> {
             ChooseScreen(
                 onCategorySelected = { type ->
                     navController.navigate(Destination.Home(type))
-                },
+                }
             )
         }
 
@@ -85,8 +82,18 @@ fun NavigationGraph(
             val args = backStackEntry.toRoute<Destination.Home>()
             HomeScreen(
                 type = args.type,
+                onBackPressed = { navController.popBackStack() },
+                navigateDetail = {
+                    navController.navigate(it)
+                }
+            )
+        }
+
+        composable<Destination.HomeDetail> {
+            HomeDetailScreen(
                 onBackPressed = { navController.popBackStack() }
             )
         }
+
     }
 }
