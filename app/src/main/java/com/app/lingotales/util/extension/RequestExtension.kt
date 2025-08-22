@@ -1,13 +1,22 @@
 package com.app.lingotales.util.extension
 
-/* suspend fun <T> safeApiCallWithRestResponse(call: suspend () -> RestResponse<T>): RestResult<T> {
+import android.os.Build
+import androidx.annotation.RequiresExtension
+import com.app.lingotales.core.network.ApiException
+import com.app.lingotales.core.network.RestResponse
+import com.app.lingotales.core.network.RestResult
+import com.google.gson.Gson
+import retrofit2.HttpException
+import retrofit2.Response
+
+suspend fun <T> safeApiCallWithRestResponse(call: suspend () -> RestResponse<T>): RestResult<T> {
     return try {
         val response = call()
         if (response.data != null)
             RestResult.Success(response.data)
         else {
             RestResult.Failure(
-                PingUException(
+                ApiException(
                     response.message.orEmpty(),
                     response.code.orZero()
                 )
@@ -19,6 +28,7 @@ package com.app.lingotales.util.extension
     }
 }
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 suspend fun <T> safeApiCallWithResponse(call: suspend () -> Response<T>): RestResult<T> {
     return try {
         val response = call()
@@ -28,19 +38,17 @@ suspend fun <T> safeApiCallWithResponse(call: suspend () -> Response<T>): RestRe
             RestResult.Success(response.body()!!)
         } else {
             RestResult.Failure(
-                PingUException(
+                ApiException(
                     response.message().orEmpty(),
-                    response.code()
+                    status = response.code()
                 )
             )
         }
 
     } catch (e: HttpException) {
-        // HttpException: HTTP hataları (örn: 404, 500)
         RestResult.Failure(throwable = e)
 
     } catch (ex: Exception) {
-        // Diğer genel hatalar
         RestResult.Failure(throwable = ex)
     }
 }
@@ -56,4 +64,4 @@ private fun extractErrorResponse(httpException: HttpException): ApiException? {
     } catch (e: Exception) {
         null
     }
-} */
+}
