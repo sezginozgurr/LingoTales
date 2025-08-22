@@ -15,7 +15,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun onGetStartedClick() {
         viewModelScope.launch {
-            preferencesManager.saveBoolean(PreferencesKeys.IS_FIRST_RUN, false)
+            //preferencesManager.saveBoolean(PreferencesKeys.IS_FIRST_RUN, false)
         }
     }
 } 
