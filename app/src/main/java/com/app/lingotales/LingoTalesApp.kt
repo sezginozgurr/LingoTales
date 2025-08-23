@@ -2,6 +2,14 @@ package com.app.lingotales
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
-class LingoTalesApp : Application()
+class LingoTalesApp : Application() {
+    
+    override fun onCreate() {
+        super.onCreate()
+        
+        Timber.plant(Timber.DebugTree())
+    }
+}

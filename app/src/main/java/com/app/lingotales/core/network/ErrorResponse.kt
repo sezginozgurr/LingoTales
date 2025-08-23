@@ -2,5 +2,5 @@ package com.app.lingotales.core.network
 
 data class ApiException(
     override val message: String?,
-    val status: Int?,
+    val status: Int = -1,
 ) : Throwable()

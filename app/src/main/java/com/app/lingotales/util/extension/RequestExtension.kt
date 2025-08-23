@@ -12,13 +12,12 @@ import retrofit2.Response
 suspend fun <T> safeApiCallWithRestResponse(call: suspend () -> RestResponse<T>): RestResult<T> {
     return try {
         val response = call()
-        if (response.data != null)
+        if (response.succeeded && response.data != null) {
             RestResult.Success(response.data)
-        else {
+        } else {
             RestResult.Failure(
                 ApiException(
-                    response.message.orEmpty(),
-                    response.code.orZero()
+                    response.error ?: "Unknown error",
                 )
             )
         }

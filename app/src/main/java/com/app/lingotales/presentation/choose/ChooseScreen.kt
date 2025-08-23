@@ -39,6 +39,7 @@ import com.app.lingotales.R
 import com.app.lingotales.ui.theme.regularRubikBlack24
 import com.app.lingotales.ui.theme.regularWhite24
 import com.app.lingotales.util.extension.animatedItemsIndexed
+import coil.compose.AsyncImage
 
 @Composable
 fun ChooseScreen(
@@ -102,7 +103,8 @@ fun ChooseScreen(
             animatedItemsIndexed(uiState.categories) { _, cat ->
                 CategoryCard(
                     title = cat.title,
-                    backgroundImageRes = cat.imageRes,
+                    description = cat.description,
+                    imageUrl = cat.imageUrl,
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
                         viewModel.onEvent(ChooseUiEvent.SelectCategory(cat.id))
@@ -117,6 +119,8 @@ fun ChooseScreen(
 @Composable
 private fun CategoryCard(
     title: String,
+    description: String = "",
+    imageUrl: String? = null,
     modifier: Modifier = Modifier,
     backgroundImageRes: Int? = null,
     aspect: Float = 1f,
@@ -135,25 +139,67 @@ private fun CategoryCard(
             colors = CardDefaults.cardColors(containerColor = Color.Transparent),
             elevation = CardDefaults.cardElevation(8.dp)
         ) {
-            backgroundImageRes?.let { res ->
-                Image(
-                    painter = painterResource(res),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Fit,
-                    alignment = Alignment.Center
-                )
+            when {
+                !imageUrl.isNullOrEmpty() -> {
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center
+                    )
+                }
+                backgroundImageRes != null -> {
+                    Image(
+                        painter = painterResource(backgroundImageRes),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Fit,
+                        alignment = Alignment.Center
+                    )
+                }
+                else -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color(0xFF4CAF50),
+                                        Color(0xFF2E7D32)
+                                    )
+                                )
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = title.first().uppercase(),
+                            style = regularWhite24,
+                            color = Color.White
+                        )
+                    }
+                }
             }
         }
 
         Spacer(Modifier.height(8.dp))
         Text(
             text = title,
-            style = regularWhite24 ,
+            style = regularWhite24,
             color = Color.White,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
         )
+        
+        if (description.isNotEmpty()) {
+            Text(
+                text = description,
+                style = regularWhite24.copy(fontSize = 12.sp),
+                color = Color.White.copy(alpha = 0.8f),
+                textAlign = TextAlign.Center,
+                maxLines = 2
+            )
+        }
     }
 }
 
