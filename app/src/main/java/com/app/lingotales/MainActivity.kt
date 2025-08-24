@@ -38,7 +38,8 @@ class MainActivity : ComponentActivity() {
                 NavigationGraph(
                     navController = navController,
                     startDestination = initialDestination,
-                    modifier = Modifier.fillMaxHeight()
+                    modifier = Modifier.fillMaxHeight(),
+                    onLogout = { viewModel.logout() }
                 )
             }
         }

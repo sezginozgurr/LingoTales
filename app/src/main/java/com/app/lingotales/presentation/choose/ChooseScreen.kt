@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -35,11 +37,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.app.lingotales.R
 import com.app.lingotales.ui.theme.regularRubikBlack24
 import com.app.lingotales.ui.theme.regularWhite24
 import com.app.lingotales.util.extension.animatedItemsIndexed
-import coil.compose.AsyncImage
 
 @Composable
 fun ChooseScreen(
@@ -60,7 +62,7 @@ fun ChooseScreen(
                 )
             )
     ) {
-        val (header, grid) = createRefs()
+        val (header, grid, logoutButton, userBadge) = createRefs()
 
         // Üst görsel
         Box(
@@ -85,6 +87,33 @@ fun ChooseScreen(
                     .align(Alignment.Center)
                     .padding(horizontal = 16.dp)
             )
+        }
+
+        Row(
+            modifier = Modifier
+                .constrainAs(userBadge) {
+                    top.linkTo(parent.top, margin = 16.dp)
+                    end.linkTo(parent.end, margin = 16.dp)
+                }
+                .padding(top = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (!uiState.userName.isNullOrEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color(0xFFFFE082))
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    Text(
+                        text = uiState.userName ?: "",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFF5D4037),
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+                Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+            }
         }
 
         LazyVerticalGrid(
@@ -149,6 +178,7 @@ private fun CategoryCard(
                         alignment = Alignment.Center
                     )
                 }
+
                 backgroundImageRes != null -> {
                     Image(
                         painter = painterResource(backgroundImageRes),
@@ -158,6 +188,7 @@ private fun CategoryCard(
                         alignment = Alignment.Center
                     )
                 }
+
                 else -> {
                     Box(
                         modifier = Modifier
@@ -190,7 +221,7 @@ private fun CategoryCard(
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
         )
-        
+
         if (description.isNotEmpty()) {
             Text(
                 text = description,
@@ -206,7 +237,7 @@ private fun CategoryCard(
 @Preview(showBackground = true)
 @Composable
 fun ChooseScreenPreview() {
-    ChooseScreen { }
+    ChooseScreen(onCategorySelected = {})
 }
 
 

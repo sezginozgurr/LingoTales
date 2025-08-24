@@ -23,7 +23,10 @@ import kotlin.reflect.typeOf
 
 @Composable
 fun NavigationGraph(
-    navController: NavHostController, startDestination: Destination, modifier: Modifier
+    navController: NavHostController, 
+    startDestination: Destination, 
+    modifier: Modifier,
+    onLogout: () -> Unit = {}
 ) {
 
     NavHost(

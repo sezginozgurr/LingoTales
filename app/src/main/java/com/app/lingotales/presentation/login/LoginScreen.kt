@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -34,7 +35,8 @@ import com.app.tinytales.core.components.LingoTextField
 
 @Composable
 fun LoginScreen(
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val focus = LocalFocusManager.current
     var name by rememberSaveable { mutableStateOf("") }
@@ -82,7 +84,10 @@ fun LoginScreen(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             focus.clearFocus()
-                            if (isValid) onLoginSuccess()
+                            if (isValid) {
+                                viewModel.login(name.trim())
+                                onLoginSuccess()
+                            }
                         }
                     )
                 )
@@ -94,7 +99,10 @@ fun LoginScreen(
                     enabled = isValid,
                     actionClickListener = {
                         focus.clearFocus()
-                        if (isValid) onLoginSuccess()
+                        if (isValid) {
+                            viewModel.login(name.trim())
+                            onLoginSuccess()
+                        }
                     },
                     modifier = Modifier.fillMaxWidth()
                 )

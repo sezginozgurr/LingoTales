@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import timber.log.Timber
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -28,16 +29,22 @@ class MainViewModel @Inject constructor(
 
     private fun dismissSplash(savedPhoneNumber: String?, isFirstRun: Boolean) {
         when {
-
             isFirstRun -> {
                 _initialDestination.value = Destination.Onboarding
             }
-
-            savedPhoneNumber != null -> {
-                _initialDestination.value = Destination.Login
-            }
-
             else -> {
+                checkUserLoginStatus()
+            }
+        }
+    }
+
+    private fun checkUserLoginStatus() {
+        viewModelScope.launch {
+            val userName = preferencesManager.getString(PreferencesKeys.USER_NAME).first()
+            
+            if (!userName.isNullOrEmpty()) {
+                _initialDestination.value = Destination.Choose
+            } else {
                 _initialDestination.value = Destination.Login
             }
         }
@@ -48,7 +55,18 @@ class MainViewModel @Inject constructor(
         _initialDestination.value = Destination.Login
     }
 
-    private fun checkFirstRun() { //todo
+    fun logout() {
+        viewModelScope.launch {
+            try {
+                preferencesManager.removeKey(PreferencesKeys.USER_NAME)
+                _initialDestination.value = Destination.Login
+            } catch (e: Exception) {
+                Timber.e(e, "Logout sırasında hata: ${e.message}")
+            }
+        }
+    }
+
+    private fun checkFirstRun() {
         viewModelScope.launch {
             val savedPhoneNumber = autManager.getPhoneNumber()
 
