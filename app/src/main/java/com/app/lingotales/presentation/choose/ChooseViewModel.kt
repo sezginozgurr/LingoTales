@@ -48,7 +48,7 @@ class ChooseViewModel @Inject constructor(
                     is RestResult.Success -> {
                         val categories = result.data.categories.map { category ->
                             CategoryUiModel(
-                                id = category.id.toString(),
+                                id = category.id,
                                 title = category.name,
                                 description = category.description,
                                 imageUrl = category.imageUrl,
@@ -77,7 +77,7 @@ class ChooseViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: ChooseUiEvent) {
+    /* fun onEvent(event: ChooseUiEvent) {
         when (event) {
             is ChooseUiEvent.SelectCategory -> {
                 _uiState.value = _uiState.value.copy(selectedCategory = event.category)
@@ -87,5 +87,5 @@ class ChooseViewModel @Inject constructor(
                 // Navigasyon tetiklenebilir
             }
         }
-    }
+    } */
 }

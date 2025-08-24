@@ -74,8 +74,8 @@ fun NavigationGraph(
 
         composable<Destination.Choose> {
             ChooseScreen(
-                onCategorySelected = { type ->
-                    navController.navigate(Destination.Home(type))
+                onCategorySelected = { categoryId ->
+                    navController.navigate(Destination.Home(categoryId))
                 }
             )
         }
@@ -83,7 +83,7 @@ fun NavigationGraph(
         composable<Destination.Home> { backStackEntry ->
             val args = backStackEntry.toRoute<Destination.Home>()
             HomeScreen(
-                type = args.type,
+                categoryId = args.categoryId,
                 onBackPressed = { navController.popBackStack() },
                 navigateDetail = { model ->
                     navController.navigate(Destination.HomeDetail(model))

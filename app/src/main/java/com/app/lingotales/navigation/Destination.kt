@@ -17,7 +17,7 @@ sealed class Destination {
     data object Login : Destination()
 
     @Serializable
-    data class Home(val type: CategoryType) : Destination()
+    data class Home(val categoryId: Int) : Destination()
 
     @Serializable
     data class HomeDetail(val model: HomeDetailUiModel) : Destination()

@@ -44,7 +44,7 @@ import coil.compose.AsyncImage
 @Composable
 fun ChooseScreen(
     viewModel: ChooseViewModel = hiltViewModel(),
-    onCategorySelected: (CategoryType) -> Unit
+    onCategorySelected: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -100,15 +100,15 @@ fun ChooseScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            animatedItemsIndexed(uiState.categories) { _, cat ->
+            animatedItemsIndexed(uiState.categories) { _, category ->
                 CategoryCard(
-                    title = cat.title,
-                    description = cat.description,
-                    imageUrl = cat.imageUrl,
+                    title = category.title,
+                    description = category.description,
+                    imageUrl = category.imageUrl,
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        viewModel.onEvent(ChooseUiEvent.SelectCategory(cat.id))
-                        onCategorySelected(cat.type)
+                        //viewModel.onEvent(ChooseUiEvent.SelectCategory(cat.id))
+                        onCategorySelected(category.id)
                     }
                 )
             }

@@ -1,7 +1,7 @@
 package com.app.lingotales.presentation.choose
 
 data class CategoryUiModel(
-    val id: String,
+    val id: Int,
     val title: String,
     val description: String = "",
     val imageUrl: String? = null,
