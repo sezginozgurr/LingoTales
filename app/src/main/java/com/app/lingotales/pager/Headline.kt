@@ -7,5 +7,6 @@ data class Headline(
     val description: String,
     val category: String,
     val contentDescription: String,
-    @DrawableRes val image: Int,
+    @DrawableRes val image: Int = 0,
+    val imageUrl: String = ""
 )

@@ -122,7 +122,10 @@ fun HomeScreen(
                                     .fillMaxSize()
                                     .noRippleClickable {
                                         val currentBook = uiState.books[pagerState.currentPage]
-                                        navigateDetail(HomeDetailUiModel(currentBook.title))
+                                        navigateDetail(HomeDetailUiModel(
+                                            bookId = currentBook.id,
+                                            toolbarTitle = currentBook.title
+                                        ))
                                     },
                                 verticalAlignment = Alignment.CenterVertically,
                                 contentPadding = PaddingValues(horizontal = 64.dp),

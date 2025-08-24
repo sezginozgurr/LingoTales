@@ -3,6 +3,7 @@ package com.app.lingotales.data.service
 import com.app.lingotales.core.network.RestResponse
 import com.app.lingotales.data.model.MobileCategoriesResponse
 import com.app.lingotales.data.model.CategoryBooksResponse
+import com.app.lingotales.data.model.BookDetailResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -13,4 +14,7 @@ interface LingoService {
     
     @GET("mobile/categories/{categoryId}/books")
     suspend fun getCategoryBooks(@Path("categoryId") categoryId: Int): RestResponse<CategoryBooksResponse>
+    
+    @GET("mobile/books/{bookId}")
+    suspend fun getBookDetail(@Path("bookId") bookId: Int): RestResponse<BookDetailResponse>
 }

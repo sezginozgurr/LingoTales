@@ -22,10 +22,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.app.lingotales.R
 import com.app.lingotales.ui.theme.LingoTalesTheme
 
@@ -46,12 +49,24 @@ fun HeadlineArticle(
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.onBackground.copy(alpha = .1f))
         ) {
-            Image(
-                painter = painterResource(headline.image),
-                contentDescription = headline.contentDescription,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            if (headline.imageUrl.isNotEmpty()) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(headline.imageUrl)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = headline.contentDescription,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Image(
+                    painter = painterResource(headline.image),
+                    contentDescription = headline.contentDescription,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
 
         Column(

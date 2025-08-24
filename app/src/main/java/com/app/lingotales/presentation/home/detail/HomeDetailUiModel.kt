@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomeDetailUiModel(
-    val toolbarTitle: String,
+    val bookId: Int,
+    val toolbarTitle: String = ""
 )
