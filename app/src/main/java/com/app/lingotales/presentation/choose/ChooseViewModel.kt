@@ -2,18 +2,17 @@ package com.app.lingotales.presentation.choose
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.lingotales.R
 import com.app.lingotales.core.datastore.PreferencesKeys
 import com.app.lingotales.core.datastore.PreferencesManager
-import com.app.lingotales.core.network.RestResult
 import com.app.lingotales.data.service.LingoService
-import com.app.lingotales.util.extension.safeApiCallWithRestResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -35,49 +34,41 @@ class ChooseViewModel @Inject constructor(
     private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(ChooseUiState(isLoading = true))
+    val uiState: StateFlow<ChooseUiState> = _uiState.asStateFlow()
+
     init {
         getCategories()
         loadUserName()
     }
 
-    private val _uiState = MutableStateFlow(ChooseUiState(isLoading = true))
-    val uiState: StateFlow<ChooseUiState> = _uiState.asStateFlow()
-
     private fun getCategories() {
         viewModelScope.launch {
             try {
-                val result = safeApiCallWithRestResponse {
+                val response = withContext(Dispatchers.IO) {
                     lingoService.getMobileCategories()
                 }
-                
-                when (result) {
-                    is RestResult.Success -> {
-                        val categories = result.data.categories.map { category ->
-                            CategoryUiModel(
-                                id = category.id,
-                                title = category.name,
-                                description = category.description,
-                                imageUrl = category.imageUrl,
-                                imageRes = null,
-                                type = CategoryType.MASAL
-                            )
-                        }
-                        
-                        _uiState.value = _uiState.value.copy(
-                            categories = categories,
-                            isLoading = false
+
+                if (response.succeeded) {
+                    val categories = response.data.categories.map { category ->
+                        CategoryUiModel(
+                            id = category.id,
+                            title = category.name,
+                            description = category.description,
+                            imageUrl = category.imageUrl,
+                            imageRes = null,
+                            type = CategoryType.MASAL
                         )
-                        
                     }
-                    is RestResult.Failure -> {
-                        _uiState.value = _uiState.value.copy(isLoading = false)
-                    }
-                    is RestResult.Loading -> {
-                        _uiState.value = _uiState.value.copy(isLoading = true)
-                    }
+                    _uiState.value = _uiState.value.copy(
+                        categories = categories,
+                        isLoading = false
+                    )
+                } else {
+                    _uiState.value = _uiState.value.copy(isLoading = false)
                 }
             } catch (e: Exception) {
-                Timber.e(e, "API çağrısında hata: ${e.message}")
+                Timber.e(e, "Kategori yükleme sırasında beklenmeyen hata: ${e.message}")
                 _uiState.value = _uiState.value.copy(isLoading = false)
             }
         }
@@ -89,20 +80,9 @@ class ChooseViewModel @Inject constructor(
                 val name = preferencesManager.getString(PreferencesKeys.USER_NAME).first()
                 _uiState.value = _uiState.value.copy(userName = name)
             } catch (e: Exception) {
-                Timber.e(e, "Kullanıcı adı alınırken hata: ${e.message}")
+                Timber.e(e, "Kullanıcı adı alınırken hata")
             }
         }
     }
-
-    /* fun onEvent(event: ChooseUiEvent) {
-        when (event) {
-            is ChooseUiEvent.SelectCategory -> {
-                _uiState.value = _uiState.value.copy(selectedCategory = event.category)
-            }
-
-            is ChooseUiEvent.NavigateToHome -> {
-                // Navigasyon tetiklenebilir
-            }
-        }
-    } */
 }
+

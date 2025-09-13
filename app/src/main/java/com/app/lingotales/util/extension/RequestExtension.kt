@@ -12,9 +12,13 @@ import retrofit2.Response
 suspend fun <T> safeApiCallWithRestResponse(call: suspend () -> RestResponse<T>): RestResult<T> {
     return try {
         val response = call()
+        timber.log.Timber.d("API Response: succeeded=${response.succeeded}, error=${response.error}, data=${response.data}")
+        
         if (response.succeeded && response.data != null) {
+            timber.log.Timber.d("API Success - returning data")
             RestResult.Success(response.data)
         } else {
+            timber.log.Timber.e("API Error - succeeded=${response.succeeded}, error=${response.error}")
             RestResult.Failure(
                 ApiException(
                     response.error ?: "Unknown error",
@@ -23,7 +27,11 @@ suspend fun <T> safeApiCallWithRestResponse(call: suspend () -> RestResponse<T>)
         }
 
     } catch (e: HttpException) {
+        timber.log.Timber.e(e, "HttpException: ${e.message}")
         RestResult.Failure(throwable = extractErrorResponse(e) ?: e)
+    } catch (e: Exception) {
+        timber.log.Timber.e(e, "Exception: ${e.message}")
+        RestResult.Failure(throwable = e)
     }
 }
 

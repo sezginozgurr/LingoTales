@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
 
-    private const val TIMEOUT = 60L
+    private const val TIMEOUT = 120L
     private const val BASE_URL = "http://104.247.164.77/api/"//"https://storybook.volerycompany.site/api/"
 
     @Provides
