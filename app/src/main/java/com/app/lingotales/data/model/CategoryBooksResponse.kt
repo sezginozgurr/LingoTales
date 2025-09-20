@@ -1,27 +1,27 @@
 package com.app.lingotales.data.model
 
 data class CategoryBooksResponse(
-    val category: CategoryBooks,
-    val books: List<Book>
+    val category: CategoryBooks? = null,
+    val books: List<Book>? = null
 )
 
 data class CategoryBooks(
-    val id: Int,
-    val name: String,
-    val description: String,
-    val imageUrl: String?
+    val id: Int? = null,
+    val name: String? = null,
+    val description: String? = null,
+    val imageUrl: String? = null
 )
 
 data class Book(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val coverImage: String,
-    val audioUrl: String,
-    val author: String,
-    val status: String,
-    val pageCount: Int,
-    val createdAt: String,
-    val updatedAt: String
+    val id: Int? = null,
+    val title: String? = null,
+    val description: String? = null,
+    val coverImage: String? = null,
+    val audioUrl: String? = null,
+    val author: String? = null,
+    val status: String? = null,
+    val pageCount: Int? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null
 )
 

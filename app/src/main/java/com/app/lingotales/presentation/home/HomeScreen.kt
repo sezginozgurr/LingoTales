@@ -36,6 +36,7 @@ import com.app.lingotales.ui.theme.LingoTalesTheme
 import com.app.lingotales.ui.theme.regularBlack16Alpha50
 import com.app.lingotales.ui.theme.regularBlack24
 import com.app.lingotales.util.extension.noRippleClickable
+import com.app.lingotales.util.extension.orZero
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -60,7 +61,9 @@ fun HomeScreen(
         viewModel.getCategoryBooks(categoryId)
     }
 
-    val pagerState = rememberPagerState(pageCount = { uiState.books.size })
+    val pagerState = rememberPagerState(pageCount = {
+        uiState.books.size
+    })
 
     LingoTalesTheme {
         LingoScaffold(
@@ -123,8 +126,8 @@ fun HomeScreen(
                                     .noRippleClickable {
                                         val currentBook = uiState.books[pagerState.currentPage]
                                         navigateDetail(HomeDetailUiModel(
-                                            bookId = currentBook.id,
-                                            toolbarTitle = currentBook.title
+                                            bookId = currentBook.id.orZero(),
+                                            toolbarTitle = currentBook.title.orEmpty()
                                         ))
                                     },
                                 verticalAlignment = Alignment.CenterVertically,
@@ -150,7 +153,7 @@ fun HomeScreen(
                                         .fillMaxWidth()
                                 ) {
                                     Text(
-                                        text = book.title,
+                                        text = book.title.orEmpty(),
                                         style = regularBlack24,
                                         modifier = Modifier.padding(bottom = 8.dp),
                                         maxLines = 2,
@@ -173,7 +176,7 @@ fun HomeScreen(
                                     }
 
                                     Text(
-                                        text = book.description,
+                                        text = book.description.orEmpty(),
                                         style = regularBlack16Alpha50,
                                         modifier = Modifier.padding(top = 8.dp),
                                         maxLines = 3,

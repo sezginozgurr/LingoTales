@@ -41,11 +41,11 @@ class HomeViewModel @Inject constructor(
                         _uiState.value = _uiState.value.copy(
                             isLoading = false,
                             category = category,
-                            books = books,
+                            books = books ?: emptyList(),
                             error = null
                         )
                         
-                        Timber.d("Kitaplar başarıyla çekildi: ${books.size} adet, Kategori: ${category.name}")
+                        Timber.d("Kitaplar başarıyla çekildi: ${books?.size} adet, Kategori: ${category?.name}")
                     }
                     is RestResult.Failure -> {
                         _uiState.value = _uiState.value.copy(
