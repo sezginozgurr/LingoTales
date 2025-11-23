@@ -23,7 +23,8 @@ import javax.inject.Singleton
 internal object NetworkModule {
 
     private const val TIMEOUT = 120L
-    private const val BASE_URL = "http://104.247.164.77/api/"//"https://storybook.volerycompany.site/api/"
+    private const val BASE_URL = "https://storybook.gencompany.cloud/api/"
+    private const val API_KEY = "ets1vNBPDZCJ9zG3VTNp8AQrX0S2HVJANYSYOcUyRB5ABjJMax8mITGievAWqE0V"
 
     @Provides
     @Singleton
@@ -46,6 +47,13 @@ internal object NetworkModule {
         chucker: ChuckerInterceptor,
         logging: HttpLoggingInterceptor
     ): OkHttpClient = OkHttpClient.Builder().apply {
+        addInterceptor { chain ->
+            val originalRequest = chain.request()
+            val requestWithApiKey = originalRequest.newBuilder()
+                .header("X-API-Token", API_KEY)
+                .build()
+            chain.proceed(requestWithApiKey)
+        }
         addInterceptor(chucker)
         addInterceptor(logging)
         readTimeout(TIMEOUT, TimeUnit.SECONDS)
